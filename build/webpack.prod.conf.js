@@ -18,6 +18,8 @@ var prodWebpackConfig = merge(baseWebpackConfig, {
   output: {
     path: config.build.assetsRoot,
     filename: 'vue-bs-pagination.js',
+    library: 'VuePagination',
+    libraryTarget: 'umd'
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
