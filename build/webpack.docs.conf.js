@@ -12,6 +12,9 @@ var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var env = config.docs.env
 
 var webpackConfig = merge(baseWebpackConfig, {
+  entry: {
+    app: './docs/main.js'
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.docs.productionSourceMap,
@@ -21,6 +24,7 @@ var webpackConfig = merge(baseWebpackConfig, {
   devtool: config.docs.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.docs.assetsRoot,
+    publicPath: config.docs.assetsPublicPath,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },

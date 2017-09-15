@@ -7,7 +7,7 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../gh-pages'),
     index: path.resolve(__dirname, '../gh-pages/index.html'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '',
     productionSourceMap: true,
     bundleAnalyzerReport: process.env.npm_config_report
   },

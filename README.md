@@ -2,6 +2,8 @@
 
 > A very simple vue component - bootstrap pagination
 
+[Demo and Usage](https://meteorlxy.github.io/vue-bs-pagination/)
+
 ## Usage
 
 ### Get start
