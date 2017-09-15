@@ -2,9 +2,17 @@
 var path = require('path')
 
 module.exports = {
+  docs: {
+    env: require('./prod.env'),
+    assetsRoot: path.resolve(__dirname, '../gh-pages'),
+    index: path.resolve(__dirname, '../gh-pages/index.html'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/',
+    productionSourceMap: true,
+    bundleAnalyzerReport: process.env.npm_config_report
+  },
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header class="jumbotron text-center">
-      <img src="/static/images/logo.png">
+      <img src="./assets/images/logo.png">
       <h1>Bootstrap Pagination for Vue</h1>
       <p class="text-muted">A very simple vue component - bootstrap pagination</p>
       <p class="text-muted">Compatible with Vue 2.x & Bootstrap 3/4-beta</p>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import VuePagination from './components/Pagination'
+import VuePagination from '../src/components/Pagination'
 export default {
   name: 'vue-pagination',
   components: {

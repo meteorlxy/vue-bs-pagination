@@ -5,9 +5,9 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-
+var isDocs = process.argv.indexOf('--docs') > 0
 baseWebpackConfig.entry = {
-  app: './src/dev.js'
+  app: isDocs ? './docs/main.js' : './dev/main.js'
 }
 
 // add hot-reload related code to entry chunks
@@ -31,7 +31,7 @@ module.exports = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.html',
+      template: isDocs ? 'docs/index.html' : 'dev/index.html',
       inject: true
     }),
     new FriendlyErrorsPlugin()
