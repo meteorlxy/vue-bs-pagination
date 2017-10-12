@@ -2,28 +2,38 @@
 <ul class="pagination">
   
   <!--Prev Button-->
-  <li class="page-item" :class="{ disabled: onFirstPage }">
+  <li class="page-item"
+    :class="{ disabled: onFirstPage }">
+    
     <a class="page-link" rel="prev" aria-label="Previous"
       @click.prevent="prevPage">
       <span aria-hidden="true">&laquo;</span>
     </a>
+    
   </li>
   
   <!--Page Buttons-->
-  <li class="page-item" :class="{ active: paginator.value === currentPage, disabled: !paginator.enable}"
-    v-for="paginator in paginators">
+  <li class="page-item"
+    v-for="paginator in paginators"
+    :class="{ active: paginator.value === currentPage, disabled: !paginator.enable}">
+    
     <a class="page-link"
-      :disabled="!paginator.enable" @click.prevent="setPage(paginator.value)">
+      :disabled="!paginator.enable"
+      @click.prevent="setPage(paginator.value)">
       <span>{{ paginator.value }}</span>
     </a>
+    
   </li>
   
   <!--Next Button-->
-  <li class="page-item" :class="{ disabled: onLastPage }">
+  <li class="page-item"
+    :class="{ disabled: onLastPage }">
+    
     <a class="page-link" rel="next" aria-label="Next"
       @click.prevent="nextPage">
       <span aria-hidden="true">&raquo;</span>
     </a>
+    
   </li>
   
 </ul>
@@ -63,7 +73,7 @@ export default {
     },
     paginators () {
       let paginators = []
-      if (this.firstPage < this.lastPage) {
+      if (this.firstPage <= this.lastPage) {
         if (this.lastPage < this.eachSide * 2 + 4) {
           for (let i = 1; i < this.lastPage + 1; ++i) {
             paginators.push({
