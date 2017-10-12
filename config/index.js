@@ -4,8 +4,8 @@ var path = require('path')
 module.exports = {
   docs: {
     env: require('./prod.env'),
-    assetsRoot: path.resolve(__dirname, '../gh-pages'),
-    index: path.resolve(__dirname, '../gh-pages/index.html'),
+    assetsRoot: path.resolve(__dirname, '../docs'),
+    index: path.resolve(__dirname, '../docs/index.html'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '',
     productionSourceMap: true,
