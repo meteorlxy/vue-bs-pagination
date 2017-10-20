@@ -56,10 +56,12 @@ props: {
   total: {
     type: Number,
     required: true,
+    validator: val => val > 0,
   },
   eachSide: {
     type: Number,
     default: 1,
+    validator: val => val >= 0,
   },
 }
 ```
