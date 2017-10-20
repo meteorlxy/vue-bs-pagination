@@ -1,25 +1,29 @@
-var path = require('path')
-var utils = require('./utils')
-var webpack = require('webpack')
-var config = require('../config')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
+'use strict'
+const path = require('path')
+const utils = require('./utils')
+const webpack = require('webpack')
+const config = require('../config')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.base.conf')
 
-var env = config.build.env
+const env = config.build.env
 
-var prodWebpackConfig = merge(baseWebpackConfig, {
-  module: {
-    rules: utils.styleLoaders({
-      sourceMap: config.build.productionSourceMap,
-      extract: false
-    })
+const prodWebpackConfig = merge(baseWebpackConfig, {
+  entry: {
+    app: './src/main.js'
   },
-  devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
     filename: 'vue-bs-pagination.js',
     library: 'VuePagination',
     libraryTarget: 'umd'
+  },
+  devtool: config.build.cssSourceMap ? '#source-map' : false,
+  module: {
+    rules: utils.styleLoaders({
+      sourceMap: config.build.cssSourceMap,
+      extract: config.build.cssExtract
+    })
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
@@ -35,8 +39,26 @@ var prodWebpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
+if (config.build.productionGzip) {
+  const CompressionWebpackPlugin = require('compression-webpack-plugin')
+
+  prodWebpackConfig.plugins.push(
+    new CompressionWebpackPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp(
+        '\\.(' +
+        config.build.productionGzipExtensions.join('|') +
+        ')$'
+      ),
+      threshold: 10240,
+      minRatio: 0.8
+    })
+  )
+}
+
 if (config.build.bundleAnalyzerReport) {
-  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   prodWebpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 

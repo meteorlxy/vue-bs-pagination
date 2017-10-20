@@ -1,34 +1,51 @@
 # vue-bs-pagination
 
+[![build status](https://www.travis-ci.org/meteorlxy/vue-bs-pagination.svg?branch=master)](https://www.travis-ci.org/meteorlxy/vue-bs-pagination)
+[![npm version](https://badge.fury.io/js/vue-bs-pagination.svg)](https://badge.fury.io/js/vue-bs-pagination)
+
 > A very simple vue component - bootstrap pagination
 
-[Demo and Usage](https://meteorlxy.github.io/vue-bs-pagination/)
+[Live Demo](https://meteorlxy.github.io/vue-bs-pagination/)
 
-## Usage
+---
 
-### Get start
+## Get started
 
-#### Import via `npm`
+### Import
+
+#### Build tools
+
+Import via `npm`
 
 ```bash
 npm install --save vue-bs-pagination
 ```
 
-#### Register component
+Register component
 
 ```js
 import Vue from 'vue'
 import VuePagination from 'vue-bs-pagination'
-Vue.component('v-pagination', VuePagination)
+Vue.component('VuePagination', VuePagination)
 ```
 
-#### Template
+#### Browser
+
+Import via `<script>` tag
 
 ```html
-<v-pagination :total="10" v-model="page"></v-pagination>
+<script src="path/to/dist/vue-bs-pagination.js"></script>
 ```
 
-#### Stylesheet
+### Usage
+
+Template
+
+```html
+<vue-pagination :total="10" v-model="page"></vue-pagination>
+```
+
+Stylesheet
 
 > Use `Bootstrap 3` or `Bootstrap 4.0-beta`
 
@@ -47,8 +64,9 @@ props: {
 }
 ```
 
+---
 
-## Develop
+## Developing & Contributing
 
 ``` bash
 # install dependencies
@@ -56,11 +74,7 @@ npm install
 
 # serve with hot reload at localhost:8080
 npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
 
+- `/src/components` the source file of `vue-bs-pagination` component
+- `/src/docs` the source file of [github-pages](https://meteorlxy.github.io/vue-bs-pagination/) of this project

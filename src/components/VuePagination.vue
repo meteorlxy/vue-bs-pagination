@@ -2,35 +2,51 @@
 <ul class="pagination">
   
   <!--Prev Button-->
-  <li class="page-item"
-    :class="{ disabled: onFirstPage }">
+  <li
+    :class="{ disabled: onFirstPage }"
+    class="page-item"
+  >
     
-    <a class="page-link" rel="prev" aria-label="Previous"
-      @click.prevent="prevPage">
+    <a
+      @click.prevent="prevPage"
+      class="page-link"
+      rel="prev"
+      aria-label="Previous"
+    >
       <span aria-hidden="true">&laquo;</span>
     </a>
     
   </li>
   
   <!--Page Buttons-->
-  <li class="page-item"
+  <li
     v-for="paginator in paginators"
-    :class="{ active: paginator.value === currentPage, disabled: !paginator.enable}">
+    :class="{ active: paginator.value === currentPage, disabled: !paginator.enable}"
+    class="page-item"
+  >
     
-    <a class="page-link"
+    <a
+      @click.prevent="setPage(paginator.value)"
+      class="page-link"
       :disabled="!paginator.enable"
-      @click.prevent="setPage(paginator.value)">
+    >
       <span>{{ paginator.value }}</span>
     </a>
     
   </li>
   
   <!--Next Button-->
-  <li class="page-item"
-    :class="{ disabled: onLastPage }">
+  <li
+    :class="{ disabled: onLastPage }"
+    class="page-item"
+  >
     
-    <a class="page-link" rel="next" aria-label="Next"
-      @click.prevent="nextPage">
+    <a
+      @click.prevent="nextPage"
+      class="page-link"
+      rel="next"
+      aria-label="Next"
+    >
       <span aria-hidden="true">&raquo;</span>
     </a>
     
@@ -45,14 +61,17 @@ export default {
     value: {
       type: Number,
       default: 1,
+      validator: val => val > 0
     },
     total: {
       type: Number,
       required: true,
+      validator: val => val > 0,
     },
     eachSide: {
       type: Number,
       default: 1,
+      validator: val => val >= 0,
     },
   },
   computed: {
@@ -75,15 +94,15 @@ export default {
       let paginators = []
       if (this.firstPage <= this.lastPage) {
         if (this.lastPage < this.eachSide * 2 + 4) {
-          for (let i = 1; i < this.lastPage + 1; ++i) {
+          for (let i = this.firstPage; i < this.lastPage + 1; ++i) {
             paginators.push({
               value: i,
               enable: true,
             })
           }
         } else {
-          if (this.currentPage - 1 < this.eachSide + 2) {
-            for (let i = 1; i < Math.max(this.eachSide * 2 + 1, this.currentPage + this.eachSide + 1); ++i) {
+          if (this.currentPage - this.firstPage < this.eachSide + 2) { // if currentPage near firstPage
+            for (let i = this.firstPage; i < Math.max(this.eachSide * 2 + 1, this.currentPage + this.eachSide + 1); ++i) {
               paginators.push({
                 value: i,
                 enable: true,
@@ -97,9 +116,9 @@ export default {
               value: this.lastPage,
               enable: true,
             })
-          } else if (this.lastPage - this.currentPage < this.eachSide + 2) {
+          } else if (this.lastPage - this.currentPage < this.eachSide + 2) { // if currentPage near lastPage
             paginators.push({
-              value: 1,
+              value: this.firstPage,
               enable: true,
             })
             paginators.push({
@@ -112,9 +131,9 @@ export default {
                 enable: true,
               })
             }
-          } else {
+          } else { // if currentPage in the middle
             paginators.push({
-              value: 1,
+              value: this.firstPage,
               enable: true,
             })
             paginators.push({
@@ -157,9 +176,9 @@ export default {
 }
 </script>
 
-<style type="text/css" lang="scss" scoped>
+<style type="text/css" lang="scss">
 .pagination {
-  a {
+  a.page-link:not(.disabled) {
     cursor: pointer;
   }
 }

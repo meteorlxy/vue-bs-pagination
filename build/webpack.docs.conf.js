@@ -13,15 +13,15 @@ var env = config.docs.env
 
 var webpackConfig = merge(baseWebpackConfig, {
   entry: {
-    app: './dev/main.js'
+    app: './src/docs/index.js'
   },
   module: {
     rules: utils.styleLoaders({
-      sourceMap: config.docs.productionSourceMap,
-      extract: true
+      sourceMap: config.docs.cssSourceMap,
+      extract: config.docs.cssExtract
     })
   },
-  devtool: config.docs.productionSourceMap ? '#source-map' : false,
+  devtool: config.docs.cssSourceMap ? '#source-map' : false,
   output: {
     path: config.docs.assetsRoot,
     publicPath: config.docs.assetsPublicPath,
@@ -55,7 +55,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: config.docs.index,
-      template: 'dev/index.html',
+      template: 'src/docs/index.html',
       inject: true,
       minify: {
         removeComments: true,
