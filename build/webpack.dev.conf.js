@@ -1,7 +1,8 @@
 'use strict'
+const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
-const config = require('../config')
+const config = require('../config').dev
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -11,15 +12,34 @@ const portfinder = require('portfinder')
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
+const createLintingRule = () => ({
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [path.join(__dirname, '../src'), path.join(__dirname, '../test')],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.showEslintErrorsInOverlay
+  }
+})
+
 const devWebpackConfig = merge(baseWebpackConfig, {
   entry: {
     app: './src/docs/app.js'
   },
+  output: {
+    path: config.assetsRoot,
+    filename: '[name].js',
+    publicPath: config.assetsPublicPath
+  },
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
+    rules: [
+      ...(utils.styleLoaders({ sourceMap: config.cssSourceMap, usePostCSS: true })),
+      ...(config.useEslint ? [createLintingRule()] : []),
+    ]
   },
   // cheap-module-eval-source-map is faster for development
-  devtool: config.dev.devtool,
+  devtool: config.devtool,
 
   // these devServer options should be customized in /config/index.js
   devServer: {
@@ -27,17 +47,17 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     historyApiFallback: true,
     hot: true,
     compress: true,
-    host: HOST || config.dev.host,
-    port: PORT || config.dev.port,
-    open: config.dev.autoOpenBrowser,
-    overlay: config.dev.errorOverlay
+    host: HOST || config.host,
+    port: PORT || config.port,
+    open: config.autoOpenBrowser,
+    overlay: config.errorOverlay
       ? { warnings: false, errors: true }
       : false,
-    publicPath: config.dev.assetsPublicPath,
-    proxy: config.dev.proxyTable,
+    publicPath: config.assetsPublicPath,
+    proxy: config.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
-      poll: config.dev.poll,
+      poll: config.poll,
     }
   },
   plugins: [
@@ -57,7 +77,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 })
 
 module.exports = new Promise((resolve, reject) => {
-  portfinder.basePort = process.env.PORT || config.dev.port
+  portfinder.basePort = process.env.PORT || config.port
   portfinder.getPort((err, port) => {
     if (err) {
       reject(err)
@@ -72,7 +92,7 @@ module.exports = new Promise((resolve, reject) => {
         compilationSuccessInfo: {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
-        onErrors: config.dev.notifyOnErrors
+        onErrors: config.notifyOnErrors
         ? utils.createNotifierCallback()
         : undefined
       }))
