@@ -1,11 +1,15 @@
 language: node_js
 node_js: stable
+git:
+  depth: 10
 
 # S: Build Lifecycle
 install:
   - npm install
 
 script:
+  - npm run lint
+  - npm run test
   - npm run build-docs
 
 after_success:
@@ -21,4 +25,3 @@ after_success:
 branches:
   only:
     - master
-    

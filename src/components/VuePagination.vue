@@ -92,69 +92,67 @@ export default {
     },
     paginators () {
       let paginators = []
-      if (this.firstPage <= this.lastPage) {
-        if (this.lastPage < this.eachSide * 2 + 4) {
-          for (let i = this.firstPage; i < this.lastPage + 1; ++i) {
+      if (this.lastPage < this.eachSide * 2 + 4) {
+        for (let i = this.firstPage; i < this.lastPage + 1; ++i) {
+          paginators.push({
+            value: i,
+            enable: true,
+          })
+        }
+      } else {
+        if (this.currentPage - this.firstPage < this.eachSide + 2) { // if currentPage near firstPage
+          for (let i = this.firstPage; i < Math.max(this.eachSide * 2 + 1, this.currentPage + this.eachSide + 1); ++i) {
             paginators.push({
               value: i,
               enable: true,
             })
           }
-        } else {
-          if (this.currentPage - this.firstPage < this.eachSide + 2) { // if currentPage near firstPage
-            for (let i = this.firstPage; i < Math.max(this.eachSide * 2 + 1, this.currentPage + this.eachSide + 1); ++i) {
-              paginators.push({
-                value: i,
-                enable: true,
-              })
-            }
+          paginators.push({
+            value: '...',
+            enable: false,
+          })
+          paginators.push({
+            value: this.lastPage,
+            enable: true,
+          })
+        } else if (this.lastPage - this.currentPage < this.eachSide + 2) { // if currentPage near lastPage
+          paginators.push({
+            value: this.firstPage,
+            enable: true,
+          })
+          paginators.push({
+            value: '...',
+            enable: false,
+          })
+          for (let i = Math.min(this.lastPage - this.eachSide * 2 + 1, this.currentPage - this.eachSide); i < this.lastPage + 1; ++i) {
             paginators.push({
-              value: '...',
-              enable: false,
-            })
-            paginators.push({
-              value: this.lastPage,
-              enable: true,
-            })
-          } else if (this.lastPage - this.currentPage < this.eachSide + 2) { // if currentPage near lastPage
-            paginators.push({
-              value: this.firstPage,
-              enable: true,
-            })
-            paginators.push({
-              value: '...',
-              enable: false,
-            })
-            for (let i = Math.min(this.lastPage - this.eachSide * 2 + 1, this.currentPage - this.eachSide); i < this.lastPage + 1; ++i) {
-              paginators.push({
-                value: i,
-                enable: true,
-              })
-            }
-          } else { // if currentPage in the middle
-            paginators.push({
-              value: this.firstPage,
-              enable: true,
-            })
-            paginators.push({
-              value: '...',
-              enable: false,
-            })
-            for (let i = this.currentPage - this.eachSide; i < this.currentPage + this.eachSide + 1; ++i) {
-              paginators.push({
-                value: i,
-                enable: true,
-              })
-            }
-            paginators.push({
-              value: '...',
-              enable: false,
-            })
-            paginators.push({
-              value: this.lastPage,
+              value: i,
               enable: true,
             })
           }
+        } else { // if currentPage in the middle
+          paginators.push({
+            value: this.firstPage,
+            enable: true,
+          })
+          paginators.push({
+            value: '...',
+            enable: false,
+          })
+          for (let i = this.currentPage - this.eachSide; i < this.currentPage + this.eachSide + 1; ++i) {
+            paginators.push({
+              value: i,
+              enable: true,
+            })
+          }
+          paginators.push({
+            value: '...',
+            enable: false,
+          })
+          paginators.push({
+            value: this.lastPage,
+            enable: true,
+          })
         }
       }
       return paginators

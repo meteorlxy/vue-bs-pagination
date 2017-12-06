@@ -39,13 +39,19 @@ Import via `<script>` tag
 
 ### Usage
 
-Template
+#### Template
 
+In HTML
 ```html
 <vue-pagination :total="10" v-model="page"></vue-pagination>
 ```
 
-Stylesheet
+In SFC
+```html
+<VuePagination :total="10" v-model="page" /> 
+```
+
+#### Stylesheet
 
 > Use `Bootstrap 3` or `Bootstrap 4.0-beta`
 

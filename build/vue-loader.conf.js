@@ -3,22 +3,19 @@ const utils = require('./utils')
 const config = require('../config')
 const isProduction = process.env.NODE_ENV === 'production'
 const isDocs = process.argv.indexOf('--docs') > 0
+const sourceMapEnabled = isProduction
+  ? config.build.productionSourceMap
+  : config.dev.cssSourceMap
 
 module.exports = {
   loaders: utils.cssLoaders({
-    sourceMap: isProduction
-      ? isDocs
-      ? config.docs.cssSourceMap
-      : config.build.cssSourceMap
-      : config.dev.cssSourceMap,
-    extract: isProduction
-      ? isDocs
-      ? config.docs.cssExtract
-      : config.build.cssExtract
-      : config.dev.cssExtract
+    sourceMap: sourceMapEnabled,
+    extract: isProduction && isDocs
   }),
+  cssSourceMap: sourceMapEnabled,
+  cacheBusting: config.dev.cacheBusting,
   transformToRequire: {
-    video: 'src',
+    video: ['src', 'poster'],
     source: 'src',
     img: 'src',
     image: 'xlink:href'
